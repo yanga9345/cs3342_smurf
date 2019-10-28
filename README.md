@@ -322,8 +322,7 @@ brace_block = "{" code  "}"
 * It might be tempting to start with the lexer, then implement the parser, ands
   finally do the interpreter. I suggest it would be more instructive to instead
   implement this across these layers. When I first started, I wrote a parser
-  that just handled integers, built an AST, transformed it into the semantic
-  tree, then interpreted that.
+  that just handled integers, built an AST, then interpreted that.
 
   By doing so, I learned the tools I would be using (Arpeggio in my case), and
   made a number of structural mistakes, which were easy to fix because there was
