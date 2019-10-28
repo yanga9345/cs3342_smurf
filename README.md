@@ -6,8 +6,21 @@ The project involves implementing a small yet relatively powerful programming
 language. The language you implement will support functions, closures,
 recursion, bound variables, conditional logic, and integer arithmetic.
 
-The language is called Smurf (because it is small, and if languages can colors,
+The language is called Smurf (because it is small, and if languages had colors,
 it would be blue).
+
+# Submission Checklist
+
+[ ] everything I'll need to build a running version of your submission (source,
+    dependency loading, etc)
+
+[ ] a build file that will create an executable (if required)
+
+[ ] a script that will run the tests.
+
+[ ] packaged into a PR that MUST INCLUDE your SMU ID and name.
+
+(see [Deliverables](#deliverables) for more details)
 
 ## Your Task
 
@@ -35,7 +48,7 @@ C++ PEG parser, or you could go old-school and use `flex` for lexing and `byacc`
 for parsing and AST generation. (FWIW, using `byacc` and `flex` will probably
 increase the level of effort by a factor of two.)
 
-### Deliverable
+### Deliverables
 
 You'll deliver your work as a PR. Your commit should include all source
 files—both program source and (if you used them) lexical
