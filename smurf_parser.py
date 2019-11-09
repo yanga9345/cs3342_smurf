@@ -5,10 +5,19 @@ class Parser():
     def __init__(self):
         self.pg = ParserGenerator(
             # A list of all token names accepted by the parser.
-            ['NUMBER', 'PRINT', 'OPEN_PAREN', 'CLOSE_PAREN', 'MULT', 'DIV', 'SUM', 'SUB']
+            ['NUMBER', 'PRINT', 'OPEN_PAREN', 'CLOSE_PAREN', 'MULT', 'DIV', 'SUM', 'SUB'],
+            precedence=[
+                ('left', ['PRINT']),
+                ('left', ['SUM', 'SUB', ]),
+                ('left', ['MULT', 'DIV', ]),
+            ]
         )
 
     def parse(self):
+        #@self.pg.production('statement : expression')
+        #def statement_expr(state, p):
+        #    return p[0]
+
         @self.pg.production('program : PRINT OPEN_PAREN expression CLOSE_PAREN')
         def program(p):
             return Print(p[2])

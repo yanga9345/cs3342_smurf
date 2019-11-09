@@ -2,7 +2,7 @@ from smurf_lexer import Lexer
 from smurf_parser import Parser
 
 text_input = """
-print(2 * 5 - 3*2)
+print(21/3) 
 """
 
 lexer = Lexer().get_lexer()

@@ -5,6 +5,15 @@ class Number():
     def eval(self):
         return int(self.value)
 
+#class Variable():
+#    def __init__(self, value):
+#        self.value = value
+
+# Not sure about this
+#class Assignment():
+#    def __init__(self, value):
+#        self.value = value
+
 
 class BinaryOp():
     def __init__(self, left, right):
@@ -29,7 +38,7 @@ class Mult(BinaryOp):
 
 class Div(BinaryOp):
     def eval(self):
-        return self.left.eval() / self.right.eval()
+        return int(self.left.eval() / self.right.eval())
 
 
 class Print():
