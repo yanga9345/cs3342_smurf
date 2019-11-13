@@ -10,10 +10,12 @@ class Parser():
                 ('left', ['PRINT']),
                 ('left', ['SUM', 'SUB', ]),
                 ('left', ['MULT', 'DIV', ]),
+                ('left', ['OPEN_PAREN', 'CLOSE_PAREN', ]),
             ]
         )
 
     def parse(self):
+
         #@self.pg.production('statement : expression')
         #def statement_expr(state, p):
         #    return p[0]
@@ -43,9 +45,17 @@ class Parser():
         def number(p):
             return Number(p[0].value)
 
+        @self.pg.production('expression : SUB NUMBER')
+        def negative_number(p):
+            return Mult(Number(p[1].value), Number(-1))
+
         @self.pg.error
         def error_handle(token):
             raise ValueError(token)
+
+        @self.pg.production('expression : OPEN_PAREN expression CLOSE_PAREN')
+        def factor_paren(p):
+            return p[1]
 
     def get_parser(self):
         return self.pg.build()
