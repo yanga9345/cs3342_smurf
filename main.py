@@ -2,7 +2,7 @@ from smurf_lexer import Lexer
 from smurf_parser import Parser
 
 text_input = """
-print(5--1)  
+let a = 1
 """
 
 lexer = Lexer().get_lexer()

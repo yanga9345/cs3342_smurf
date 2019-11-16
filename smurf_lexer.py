@@ -1,13 +1,12 @@
 from rply import LexerGenerator
 
-
 class Lexer():
     def __init__(self):
         self.lexer = LexerGenerator()
 
     def add_tokens(self):
         # let
-        #self.lexer.add('LET', r'let')
+        self.lexer.add('LET', r'let')
 
         # print
         self.lexer.add('PRINT', r'print')
@@ -21,12 +20,19 @@ class Lexer():
         self.lexer.add('SUB', r'\-')
         self.lexer.add('MULT', r'\*')
         self.lexer.add('DIV', r'\/')
+        self.lexer.add('ASSIGN', r'\=')
 
         # number
         self.lexer.add('NUMBER', r'\d+')
 
+        # variable
+        self.lexer.add('VAR', r'\w')
+
         # ignore spaces
         self.lexer.ignore('\s+')
+
+        # ignore comments
+        self.lexer.ignore('\#.*')
 
     def get_lexer(self):
         self.add_tokens()

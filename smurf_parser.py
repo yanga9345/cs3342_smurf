@@ -1,18 +1,22 @@
 from rply import ParserGenerator
-from ast import Number, Print, Sum, Sub, Mult, Div
+from ast import Number, Print, Sum, Sub, Mult, Div, Assign
 
 class Parser():
     def __init__(self):
         self.pg = ParserGenerator(
             # A list of all token names accepted by the parser.
-            ['NUMBER', 'PRINT', 'OPEN_PAREN', 'CLOSE_PAREN', 'MULT', 'DIV', 'SUM', 'SUB'],
+            ['LET', 'NUMBER', 'PRINT', 'OPEN_PAREN', 'CLOSE_PAREN', 'MULT', 'DIV', 'SUM', 'SUB', 'ASSIGN', 'VAR'],
             precedence=[
                 ('left', ['PRINT']),
+                ('left', ['ASSIGN']),
+                ('left', ['LET']),
                 ('left', ['SUM', 'SUB', ]),
                 ('left', ['MULT', 'DIV', ]),
                 ('left', ['OPEN_PAREN', 'CLOSE_PAREN', ]),
             ]
         )
+
+        self.variables = {}
 
     def parse(self):
 
@@ -20,9 +24,19 @@ class Parser():
         #def statement_expr(state, p):
         #    return p[0]
 
-        @self.pg.production('program : PRINT OPEN_PAREN expression CLOSE_PAREN')
-        def program(p):
+        @self.pg.production('function : LET VAR ASSIGN expression')
+        def assignment(p):
+            return Assign(p[1].value, p[3].value, self.variables)
+
+        @self.pg.production('function : PRINT OPEN_PAREN expression CLOSE_PAREN')
+        def output(p):
             return Print(p[2])
+
+        #self.pg.production('function : function OPEN_PAREN expression CLOSE_PAREN')
+        #def function(p):
+        #    function_name = p[0]
+        #    if function_name.gettokentype() == 'PRINT':
+        #        return Print(p[2])
 
         @self.pg.production('expression : expression MULT expression')
         @self.pg.production('expression : expression DIV expression')
@@ -56,6 +70,13 @@ class Parser():
         @self.pg.production('expression : OPEN_PAREN expression CLOSE_PAREN')
         def factor_paren(p):
             return p[1]
+
+
+        #@self.pg.production('expression : LET VAR ASSIGN expression')
+        # @self.pg.production('expression : var ASSIGN expression')
+        #def assignment(p):
+        #    return Number(p[3].value)
+            # return Assign(p[1], p[3], self.variables)
 
     def get_parser(self):
         return self.pg.build()

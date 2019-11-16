@@ -5,14 +5,9 @@ class Number():
     def eval(self):
         return int(self.value)
 
-#class Variable():
+# Not sure about how im supposed to do this
+#class Assign():
 #    def __init__(self, value):
-#        self.value = value
-
-# Not sure about this
-#class Assignment():
-#    def __init__(self, value):
-#        self.value = value
 
 
 class BinaryOp():
@@ -20,9 +15,6 @@ class BinaryOp():
         self.left = left
         self.right = right
 
-#class ParenOP():
-#    def __init__(self, inside_exp):
-#        self.inside_exp.
 
 class Sum(BinaryOp):
     def eval(self):
@@ -43,10 +35,24 @@ class Div(BinaryOp):
     def eval(self):
         return int(self.left.eval() / self.right.eval())
 
-#class Open_Paren():
-#    def eval(self):
-#        return self.left
-class Print():
+
+#class Assignment():
+#    def __init__(self, left, right, variables):
+#        self.left = left
+#        self.right = right
+#        self.variables = variables
+
+# working on this
+class Assign():
+    def __init__(self, left, right, variables):
+        self.left = left
+        self.right = right
+        self.variables = variables
+
+    def eval(self):
+        self.variables[self.left] = self.right
+
+class Print:
     def __init__(self, value):
         self.value = value
 
