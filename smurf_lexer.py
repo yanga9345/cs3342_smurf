@@ -29,10 +29,10 @@ class Lexer():
         self.lexer.add('VAR', r'\w')
 
         # ignore spaces
-        self.lexer.ignore('\s+')
+        self.lexer.ignore(r'\s+')
 
         # ignore comments
-        self.lexer.ignore('\#.*')
+        self.lexer.ignore(r'\#.*')
 
     def get_lexer(self):
         self.add_tokens()
