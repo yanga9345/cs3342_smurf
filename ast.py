@@ -52,6 +52,15 @@ class Assign():
     def eval(self):
         self.variables[self.left] = self.right
 
+class Variable():
+    def __init__(self, name, variables):
+        self.name = name
+        self.variables = variables
+
+    def eval(self):
+        return int(self.variables[self.name])
+
+
 class Print:
     def __init__(self, value):
         self.value = value

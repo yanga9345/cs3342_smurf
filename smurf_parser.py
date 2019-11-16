@@ -1,5 +1,5 @@
 from rply import ParserGenerator
-from ast import Number, Print, Sum, Sub, Mult, Div, Assign
+from ast import Number, Print, Sum, Sub, Mult, Div, Assign, Variable
 
 class Parser():
     def __init__(self):
@@ -25,18 +25,20 @@ class Parser():
         #    return p[0]
 
         @self.pg.production('function : LET VAR ASSIGN expression')
+        @self.pg.production('function : VAR ASSIGN expression')
         def assignment(p):
-            return Assign(p[1].value, p[3].value, self.variables)
+            if p[0].value == 'let':
+                return Assign(p[1].value, p[3].eval(), self.variables)
+            else:
+                return Assign(p[0].value, p[2].eval(), self.variables)
 
         @self.pg.production('function : PRINT OPEN_PAREN expression CLOSE_PAREN')
         def output(p):
             return Print(p[2])
 
-        #self.pg.production('function : function OPEN_PAREN expression CLOSE_PAREN')
-        #def function(p):
-        #    function_name = p[0]
-        #    if function_name.gettokentype() == 'PRINT':
-        #        return Print(p[2])
+        @self.pg.production('expression : VAR')
+        def variable(p):
+            return Variable(p[0].value, self.variables)
 
         @self.pg.production('expression : expression MULT expression')
         @self.pg.production('expression : expression DIV expression')
