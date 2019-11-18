@@ -5,10 +5,6 @@ class Number():
     def eval(self):
         return int(self.value)
 
-# Not sure about how im supposed to do this
-#class Assign():
-#    def __init__(self, value):
-
 
 class BinaryOp():
     def __init__(self, left, right):
@@ -36,13 +32,6 @@ class Div(BinaryOp):
         return int(self.left.eval() / self.right.eval())
 
 
-#class Assignment():
-#    def __init__(self, left, right, variables):
-#        self.left = left
-#        self.right = right
-#        self.variables = variables
-
-# working on this
 class Assign():
     def __init__(self, left, right, variables):
         self.left = left
@@ -51,6 +40,7 @@ class Assign():
 
     def eval(self):
         self.variables[self.left] = self.right
+
 
 class Variable():
     def __init__(self, name, variables):
@@ -62,8 +52,26 @@ class Variable():
 
 
 class Print:
-    def __init__(self, value):
+    def __init__(self, value, variables):
         self.value = value
+        self.variables = variables
+
+    def print_all(self, val):
+        if isinstance(val, tuple):
+            for element in val:
+                self.print_all(element)
+        else:
+            print(val.eval())
 
     def eval(self):
-        print(self.value.eval())
+        self.print_all(self.value)
+        #print(self.value.eval())
+        #evaluate_children(print, self.value)
+
+
+#def evaluate_children(function, value):
+#    if isinstance(value, tuple):
+#        for element in value:
+#            evaluate_children(function, element)
+#    else:
+#        function(value.eval())

@@ -28,6 +28,9 @@ class Lexer():
         # variable
         self.lexer.add('VAR', r'\w')
 
+        # comma
+        self.lexer.add('COMMA', r'\,')
+
         # ignore spaces
         self.lexer.ignore(r'\s+')
 

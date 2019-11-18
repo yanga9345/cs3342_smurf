@@ -1,12 +1,14 @@
 from rply import ParserGenerator
 from ast import Number, Print, Sum, Sub, Mult, Div, Assign, Variable
 
-class Parser():
+
+class Parser:
     def __init__(self):
         self.pg = ParserGenerator(
             # A list of all token names accepted by the parser.
-            ['LET', 'NUMBER', 'PRINT', 'OPEN_PAREN', 'CLOSE_PAREN', 'MULT', 'DIV', 'SUM', 'SUB', 'ASSIGN', 'VAR'],
+            ['LET', 'NUMBER', 'PRINT', 'OPEN_PAREN', 'CLOSE_PAREN', 'MULT', 'DIV', 'SUM', 'SUB', 'ASSIGN', 'VAR', 'COMMA'],
             precedence=[
+                ('left', ['COMMA']),
                 ('left', ['PRINT']),
                 ('left', ['ASSIGN']),
                 ('left', ['LET']),
@@ -19,26 +21,27 @@ class Parser():
         self.variables = {}
 
     def parse(self):
-
-        #@self.pg.production('statement : expression')
-        #def statement_expr(state, p):
-        #    return p[0]
-
-        @self.pg.production('function : LET VAR ASSIGN expression')
-        @self.pg.production('function : VAR ASSIGN expression')
+        @self.pg.production('expression : LET VAR ASSIGN expression')
+        @self.pg.production('expression : VAR ASSIGN expression')
         def assignment(p):
             if p[0].value == 'let':
                 return Assign(p[1].value, p[3].eval(), self.variables)
             else:
                 return Assign(p[0].value, p[2].eval(), self.variables)
 
-        @self.pg.production('function : PRINT OPEN_PAREN expression CLOSE_PAREN')
+        @self.pg.production('expression : PRINT OPEN_PAREN expression CLOSE_PAREN')
         def output(p):
-            return Print(p[2])
+            return Print(p[2], self.variables)
 
         @self.pg.production('expression : VAR')
         def variable(p):
             return Variable(p[0].value, self.variables)
+
+        #fix this
+        @self.pg.production('expression : expression COMMA expression')
+        def comma(p):
+            #p[0].eval()
+            return p[0], p[2]
 
         @self.pg.production('expression : expression MULT expression')
         @self.pg.production('expression : expression DIV expression')
@@ -72,13 +75,6 @@ class Parser():
         @self.pg.production('expression : OPEN_PAREN expression CLOSE_PAREN')
         def factor_paren(p):
             return p[1]
-
-
-        #@self.pg.production('expression : LET VAR ASSIGN expression')
-        # @self.pg.production('expression : var ASSIGN expression')
-        #def assignment(p):
-        #    return Number(p[3].value)
-            # return Assign(p[1], p[3], self.variables)
 
     def get_parser(self):
         return self.pg.build()
