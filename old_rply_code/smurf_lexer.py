@@ -37,6 +37,9 @@ class Lexer():
         # ignore comments
         self.lexer.ignore(r'\#.*')
 
+        #self.lexer.add('NEWLINE', r'\\n')
+        self.lexer.ignore(r'\\n')
+
     def get_lexer(self):
         self.add_tokens()
         return self.lexer.build()

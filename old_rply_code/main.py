@@ -1,5 +1,5 @@
-from smurf_lexer import Lexer
-from smurf_parser import Parser
+from old_rply_code.smurf_lexer import Lexer
+from old_rply_code.smurf_parser import Parser
 
 text_input = """
 let a = 1

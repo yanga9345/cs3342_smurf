@@ -6,6 +6,14 @@ class Number():
         return int(self.value)
 
 
+class Boolean():
+    def __init__(self, value):
+        self.value = value
+
+    def eval(self):
+        return self.value
+
+
 class BinaryOp():
     def __init__(self, left, right):
         self.left = left
@@ -33,28 +41,28 @@ class Div(BinaryOp):
 
 
 class Assign():
-    def __init__(self, left, right, variables):
+    def __init__(self, left, right, binding):
         self.left = left
         self.right = right
-        self.variables = variables
+        self.binding = binding
 
     def eval(self):
-        self.variables[self.left] = self.right
+        self.binding[self.left] = self.right
 
 
 class Variable():
-    def __init__(self, name, variables):
+    def __init__(self, name, binding):
         self.name = name
-        self.variables = variables
+        self.binding = binding
 
     def eval(self):
-        return int(self.variables[self.name])
+        return int(self.binding[self.name])
 
 
 class Print:
-    def __init__(self, value, variables):
+    def __init__(self, value, binding):
         self.value = value
-        self.variables = variables
+        self.binding = binding
 
     def print_all(self, val):
         if isinstance(val, tuple):
@@ -69,7 +77,7 @@ class Print:
         #evaluate_children(print, self.value)
 
 
-#def evaluate_children(function, value):
+# def evaluate_children(function, value):
 #    if isinstance(value, tuple):
 #        for element in value:
 #            evaluate_children(function, element)
