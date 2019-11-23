@@ -6,7 +6,7 @@ class Visitor(PTNodeVisitor):
         return int(node.value)
 
     def visit_primary(self, node, children):
-        return children[1]
+        return children[0]
 
     def visit_mult_term(self, node, children):
         expr = children[0]
@@ -30,7 +30,13 @@ class Visitor(PTNodeVisitor):
         if children[0] == "print":
             print(children[1])
             return children[1]
+        return children[0]
 
+    #def visit_call_arguments(self, node, children):
+    #    return children[0]
+
+    #def visit_expr(self, node, children):
+    #    return children[0]
     #def visit_call_arguments(self, node, children):
     #    args = []
     #    for arg in children:
