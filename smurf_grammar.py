@@ -97,8 +97,8 @@ def relop():
 
 def function_call():
     return [
-        (variable_reference, "(", call_arguments, ")"),
-        ("print", "(", call_arguments, ")")]
+        ("print", "(", call_arguments, ")"),
+        (variable_reference, "(", call_arguments, ")")]
 
 
 def call_arguments():
