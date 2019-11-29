@@ -55,9 +55,6 @@ class Visitor(PTNodeVisitor):
             comma = node_str.find(",")
             node_str = node_str[comma+4:]
 
-    #def visit_statement(self, node, children):
-    #    return children[0]
-
     def visit_decl(self, node, children):
         end = node.value.find("|")
         var_name = node.value[0:end - 1]
@@ -84,9 +81,4 @@ class Visitor(PTNodeVisitor):
             call_args.append(arg)
         return call_args
 
-
-    #def visit_call_arguments(self, node, children):
-    #    args = []
-    #    for arg in children:
-    #        args.append(arg)
-    #    return args
+    def
