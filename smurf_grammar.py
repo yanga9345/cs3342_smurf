@@ -3,7 +3,7 @@ from arpeggio import RegExMatch, Optional, ZeroOrMore, OneOrMore, EOF
 
 
 def program():
-    return (code, EOF)
+    return code, EOF
 
 
 def comment():
@@ -15,15 +15,15 @@ def code():
 
 
 def statement():
-    return (ZeroOrMore('\n'), [("let", variable_decl), assignment, expr], ZeroOrMore('\n'))
+    return ZeroOrMore('\n'), [("let", variable_decl), assignment, expr], ZeroOrMore('\n')
 
 
 def variable_decl():
-    return (decl, ZeroOrMore((",", ZeroOrMore('\n'), decl)))
+    return decl, ZeroOrMore((",", ZeroOrMore('\n'), decl))
 
 
 def decl():
-    return (identifier, Optional(("=", expr)))
+    return identifier, Optional(("=", expr))
 
 
 def identifier():
@@ -35,11 +35,11 @@ def variable_reference():
 
 
 def if_expression():
-    return (expr, brace_block, Optional(("else", brace_block)))
+    return expr, brace_block, Optional(("else", brace_block))
 
 
 def assignment():
-    return (identifier, "=", expr)
+    return identifier, "=", expr
 
 
 def expr():
@@ -52,15 +52,15 @@ def expr():
 
 
 def boolean_expression():
-    return (arithmetic_expression, relop, arithmetic_expression)
+    return arithmetic_expression, relop, arithmetic_expression
 
 
 def arithmetic_expression():
-    return (mult_term, ZeroOrMore(addop, mult_term))
+    return mult_term, ZeroOrMore(addop, mult_term)
 
 
 def mult_term():
-    return (primary, ZeroOrMore(mulop, primary))
+    return primary, ZeroOrMore(mulop, primary)
 
 
 def primary():
@@ -106,7 +106,7 @@ def call_arguments():
 
 
 def function_definition():
-    return (param_list, brace_block)
+    return param_list, brace_block
 
 
 def param_list():
