@@ -44,6 +44,7 @@ class Visitor(PTNodeVisitor):
             else:
                 print(children[0])
                 return children[0]
+        return children[0]
 
     def visit_variable_decl(self, node, children):
         node_str = node.value
@@ -76,6 +77,8 @@ class Visitor(PTNodeVisitor):
             return self.binding[var_name]
 
     def visit_call_arguments(self, node, children):
+        if len(children) == 1:
+            return children[0]
         call_args = []
         for arg in children:
             call_args.append(arg)
