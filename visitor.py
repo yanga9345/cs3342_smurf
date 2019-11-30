@@ -1,12 +1,65 @@
 from arpeggio import PTNodeVisitor
+from Interpreter import *
 
 
 class Visitor(PTNodeVisitor):
-    binding = {}
+    #binding = {}
+    def visit_program(self, node, children):
+        return Program(children[0])
+
+    def visit_code(self, node, children):
+        return Code(children)
+
+    def visit_statement(self, node, children):
+        return Statement(children[0])
+
+    def visit_expr(self, node, children):
+        if len(children) == 1:
+            return Expr(children[0])
+        else:
+            return Expr(children[1])
 
     def visit_integer(self, node, children):
-        return int(node.value)
+        return Integer(int(node.value))
 
+    def visit_arithmetic_expression(self, node, children):
+        if len(children) == 1:
+            return children[0]
+        else:
+            if children[1] == "+":
+                return Sum(children[0], children[2])
+            else:
+                return Sub(children[0], children[2])
+
+    def visit_mult_term(self, node, children):
+        if len(children) == 1:
+            return children[0]
+        else:
+            if children[1] == "*":
+                return Mult(children[0], children[2])
+            else:
+                return Div(children[0], children[2])
+
+    def visit_function_call(self, node, children):
+        return FunctionCall(node[0], children[0])
+
+    def visit_call_arguments(self, node, children):
+        return CallArguments(children)
+
+    def visit_variable_decl(self, node, children):
+        return VariableDecl(children)
+
+    def visit_decl(self, node, children):
+        return Decl(children[0], children[1])
+
+    def visit_assignment(self, node, children):
+        return Assignment(children[0], children[1])
+
+    def visit_variable_reference(self, node, children):
+        return VarReference(node.value)
+
+def rambling():
+   '''
     def visit_mult_term(self, node, children):
         expr = children[0]
         for i in range(2, len(children), 2):
@@ -87,3 +140,4 @@ class Visitor(PTNodeVisitor):
 
 #    def visit_expr(self, node, children):
 #        return children[0]
+    '''

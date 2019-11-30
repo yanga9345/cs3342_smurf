@@ -1,7 +1,6 @@
 from arpeggio import ParserPython, visit_parse_tree
 import visitor
 import smurf_grammar
-from arpeggio.export import PTDOTExporter
 
 
 def main(debug):
@@ -13,6 +12,8 @@ def main(debug):
     parse_tree = parser.parse(contents)
 
     result = visit_parse_tree(parse_tree, visitor.Visitor(debug=debug))
+    binding = {}
+    result.eval(binding)
 
 if __name__ == "__main__":
     main(debug=False)
