@@ -1,5 +1,3 @@
-# `if` as a statement
-
 if 1 {
   print(99)
 }

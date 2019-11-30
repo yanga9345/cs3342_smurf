@@ -1,13 +1,11 @@
 from arpeggio import PTNodeVisitor
 
+
 class Visitor(PTNodeVisitor):
     binding = {}
 
     def visit_integer(self, node, children):
         return int(node.value)
-
-    def visit_primary(self, node, children):
-        return children[0]
 
     def visit_mult_term(self, node, children):
         expr = children[0]
@@ -81,4 +79,11 @@ class Visitor(PTNodeVisitor):
             call_args.append(arg)
         return call_args
 
-    def
+    def visit_if_expression(self, node, children):
+        return children[0]
+
+    def visit_brace_block(self, node, children):
+        return children[0]
+
+#    def visit_expr(self, node, children):
+#        return children[0]
