@@ -1,18 +1,36 @@
-let a = 1
-print(a)          #=> 1
-let b = a+2
-print(b)          #=> 3
-let c = a+b
-print(c)          #=> 4
+# `if` as a statement
 
-# multiple declarations in a single let
+if 1 {
+  print(99)
+}
+else {
+  print(100)
+}                                        #=> 99
 
-let e = 99, f = 100, g = e+f
-print(e,f,g)   #=> 99|100|199
+# `if` as an expression
 
-# on multiple lines
+print(if 1 { 99 } else { 100 })          #=> 99
+print(if 0 { 99 } else { 100 })          #=> 100
 
-let h = 99,
-    i = 200,
-    j = h+i
-print(h,i,j)   #=> 99|200|299
+# try relops
+
+print(if 9 < 10 { 1  } else { -1 })      #=> 1
+print(if 10 < 9 { -1 } else {  1 })      #=> 1
+print(if 9 < 9  { -1 } else {  1 })      #=> 1
+
+print(if  9 <= 10 {  1 } else { -1 })    #=> 1
+print(if 10 <=  9 { -1 } else {  1 })    #=> 1
+print(if  9 <=  9 {  1 } else { -1 })    #=> 1
+
+print(if  9 >= 10 { -1 } else {  1 })    #=> 1
+print(if 10 >=  9 {  1 } else { -1 })    #=> 1
+print(if  9 >=  9 {  1 } else { -1 })    #=> 1
+
+print(if  9 > 10 { -1 } else {  1 })     #=> 1
+print(if 10 >  9 {  1 } else { -1 })     #=> 1
+print(if  9 >  9 { -1 } else {  1 })     #=> 1
+
+print(if  9 ==  9 {  1 } else { -1 })    #=> 1
+print(if  9 == 10 { -1 } else {  1 })    #=> 1
+print(if  9 !=  9 { -1 } else {  1 })    #=> 1
+print(if  9 != 10 {  1 } else { -1 })    #=> 1

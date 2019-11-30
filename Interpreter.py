@@ -143,3 +143,87 @@ class VarReference:
         if self.var_name in binding:
             return binding[self.var_name]
 
+
+#class BoolExpr:
+#    def __init__(self, left, right):
+#        self.left = left
+#        self.right = right
+
+
+class EqualTo(BinaryOp):
+    def eval(self, binding):
+        if self.left.eval(binding) == self.right.eval(binding):
+            return 1
+        else:
+            return 0
+
+
+class NotEqualTo(BinaryOp):
+    def eval(self, binding):
+        if self.left.eval(binding) != self.right.eval(binding):
+            return 1
+        else:
+            return 0
+
+
+class LessThan(BinaryOp):
+    def eval(self, binding):
+        if self.left.eval(binding) < self.right.eval(binding):
+            return 1
+        else:
+            return 0
+
+
+class LessThanOrEqualTo(BinaryOp):
+    def eval(self, binding):
+        if self.left.eval(binding) <= self.right.eval(binding):
+            return 1
+        else:
+            return 0
+
+
+class GreaterThan(BinaryOp):
+    def eval(self, binding):
+        if self.left.eval(binding) > self.right.eval(binding):
+            return 1
+        else:
+            return 0
+
+
+class GreaterThanOrEqualTo(BinaryOp):
+    def eval(self, binding):
+        if self.left.eval(binding) >= self.right.eval(binding):
+            return 1
+        else:
+            return 0
+
+
+class IfExpression:
+    def __init__(self, bool_expr, if_block):
+        self.bool_expr = bool_expr
+        self.if_block = if_block
+
+    def eval(self, binding):
+        bool_result = self.bool_expr.eval(binding)
+        if type(bool_result) is not int:
+            bool_result = bool_result[0]
+        if bool_result == 1:
+            return self.if_block.eval(binding)
+        else:
+            return 0
+
+
+class IfElseExpression:
+    def __init__(self, bool_expr, if_block, else_block):
+        self.bool_expr = bool_expr
+        self.if_block = if_block
+        self.else_block = else_block
+
+    def eval(self, binding):
+        bool_result = self.bool_expr.eval(binding)
+        if type(bool_result) is not int:
+            bool_result = bool_result[0]
+        if bool_result == 1:
+            return self.if_block.eval(binding)
+        else:
+            return self.else_block.eval(binding)

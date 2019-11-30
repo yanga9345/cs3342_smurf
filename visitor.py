@@ -58,6 +58,29 @@ class Visitor(PTNodeVisitor):
     def visit_variable_reference(self, node, children):
         return VarReference(node.value)
 
+    def visit_boolean_expression(self, node, children):
+        if children[1] == "==":
+            return EqualTo(children[0], children[2])
+        elif children[1] == "!=":
+            return NotEqualTo(children[0], children[2])
+        elif children[1] == ">":
+            return GreaterThan(children[0], children[2])
+        elif children[1] == ">=":
+            return GreaterThanOrEqualTo(children[0], children[2])
+        elif children[1] == "<":
+            return LessThan(children[0], children[2])
+        elif children[1] == "<=":
+            return LessThanOrEqualTo(children[0], children[2])
+
+    def visit_if_expression(self, node, children):
+        if len(children) == 2:
+            return IfExpression(children[0], children[1])
+        else:
+            return IfElseExpression(children[0], children[1], children[2])
+
+    def visit_brace_block(self, node, children):
+        return children[0]
+
 def rambling():
    '''
     def visit_mult_term(self, node, children):
