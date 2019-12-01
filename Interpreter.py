@@ -93,6 +93,30 @@ class FunctionCall:
             return args
 
 
+class BuiltInFunction:
+    def __init__(self, func_name, call_args):
+        self.func_name = func_name
+        self.call_args = call_args
+
+    def eval(self, binding):
+        args = self.call_args.eval(binding)
+        if self.func_name == "print":
+            if type(args) == int:
+                print(args)
+            else:
+                count = 0
+                for arg in args:
+                    out = str(arg)
+                    if count != len(args) - 1:
+                        print(out, end="|")
+                    else:
+                        print(out)
+                    count += 1
+            return
+        else:
+            return args[0]
+
+
 class FunctionDefinition:
     def __init__(self, param_list, code_block):
         self.param_list = param_list
@@ -101,7 +125,7 @@ class FunctionDefinition:
 
     def eval(self, binding):
         # return self.code_block.eval(self.func_binding)
-        return self.code_block
+        return self.param_list, self.code_block
 
 
 class CallArguments:
