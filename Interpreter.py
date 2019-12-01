@@ -71,6 +71,7 @@ class FunctionCall:
     def __init__(self, func_name, call_args):
         self.func_name = func_name
         self.call_args = call_args
+        self.func_binding = {}
 
     def eval(self, binding):
         args = self.call_args.eval(binding)
@@ -90,6 +91,17 @@ class FunctionCall:
             return
         else:
             return args
+
+
+class FunctionDefinition:
+    def __init__(self, param_list, code_block):
+        self.param_list = param_list
+        self.code_block = code_block
+        # self.func_binding = {}
+
+    def eval(self, binding):
+        # return self.code_block.eval(self.func_binding)
+        return self.code_block
 
 
 class CallArguments:
@@ -142,12 +154,6 @@ class VarReference:
     def eval(self, binding):
         if self.var_name in binding:
             return binding[self.var_name]
-
-
-#class BoolExpr:
-#    def __init__(self, left, right):
-#        self.left = left
-#        self.right = right
 
 
 class EqualTo(BinaryOp):

@@ -3,7 +3,7 @@ from Interpreter import *
 
 
 class Visitor(PTNodeVisitor):
-    #binding = {}
+
     def visit_program(self, node, children):
         return Program(children[0])
 
@@ -41,7 +41,9 @@ class Visitor(PTNodeVisitor):
                 return Div(children[0], children[2])
 
     def visit_function_call(self, node, children):
-        return FunctionCall(node[0], children[0])
+        if len(children) == 1:
+            return FunctionCall(node[0], children[0])
+        return FunctionCall(node[0], children)
 
     def visit_call_arguments(self, node, children):
         return CallArguments(children)
@@ -80,6 +82,12 @@ class Visitor(PTNodeVisitor):
 
     def visit_brace_block(self, node, children):
         return children[0]
+
+    def visit_param_list(self, node, children):
+        return children
+
+    def visit_function_definition(self, node, children):
+        return FunctionDefinition(children[0], children[1])
 
 def rambling():
    '''
