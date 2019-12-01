@@ -67,32 +67,6 @@ class Div(BinaryOp):
         return int(self.left.eval(binding) / self.right.eval(binding))
 
 
-class FunctionCall:
-    def __init__(self, func_name, call_args):
-        self.func_name = func_name
-        self.call_args = call_args
-        self.func_binding = {}
-
-    def eval(self, binding):
-        args = self.call_args.eval(binding)
-        out = ""
-        if self.func_name == "print":
-            if type(args) == int:
-                print(args)
-            else:
-                count = 0
-                for arg in args:
-                    out = str(arg)
-                    if count != len(args) - 1:
-                        print(out, end="|")
-                    else:
-                        print(out)
-                    count += 1
-            return
-        else:
-            return args
-
-
 class BuiltInFunction:
     def __init__(self, func_name, call_args):
         self.func_name = func_name
@@ -117,14 +91,35 @@ class BuiltInFunction:
             return args[0]
 
 
+class FunctionCall:
+    def __init__(self, func_name, call_args):
+        self.func_name = func_name
+        self.call_args = call_args
+        self.func_binding = {}
+
+    def eval(self, binding):
+        if type(self.call_args) == VarReference:
+            args = self.call_args.eval(binding)
+            return args[1].eval(binding)
+        else:
+            parameters = self.call_args[0].eval(binding)[0]
+            #if type(parameters) is tuple:
+            #    parameters = parameters[0]
+            args = self.call_args[1].eval(binding)
+
+            #if type(parameters) is not list:
+            for i in range(len(parameters)):
+                # self.func_binding[parameters[i]] = args[i]
+                binding[parameters[i]] = args[i]
+            return binding[self.func_name.value][1].eval(binding)
+
+
 class FunctionDefinition:
     def __init__(self, param_list, code_block):
         self.param_list = param_list
         self.code_block = code_block
-        # self.func_binding = {}
 
     def eval(self, binding):
-        # return self.code_block.eval(self.func_binding)
         return self.param_list, self.code_block
 
 

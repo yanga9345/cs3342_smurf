@@ -41,7 +41,7 @@ class Visitor(PTNodeVisitor):
                 return Div(children[0], children[2])
 
     def visit_function_call(self, node, children):
-        if node[0].value == "print" or "(":
+        if node[0].value == "print" or node[0].value == "(":
             return BuiltInFunction(node[0], children[0])
         if len(children) == 1:
             return FunctionCall(node[0], children[0])
