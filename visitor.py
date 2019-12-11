@@ -15,7 +15,7 @@ class Visitor(PTNodeVisitor):
 
     def visit_expr(self, node, children):
         #if len(children) == 1:
-            return Expr(children[0])
+        return Expr(children[0])
         #else:
         #    return Expr(children[1])
 

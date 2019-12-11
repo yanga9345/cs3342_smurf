@@ -23,7 +23,7 @@ SMU ID:
 
 ##### Grading criteria (see [Grading](#grading) below):
 
-[ ] test-based
+[X] test-based
 
 [ ] feature based
 
