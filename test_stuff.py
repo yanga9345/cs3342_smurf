@@ -1,4 +1,4 @@
-import sys
+# used to debug program
 from arpeggio import ParserPython, visit_parse_tree
 import visitor
 import smurf_grammar
@@ -7,13 +7,12 @@ from interpreter import Binding
 
 def main(debug):
     tests = [
-        # "test_cases/test.smu",
-        #"test_cases/00_expr.smu",
-        #"test_cases/01_variables.smu",
-        #"test_cases/02_let.smu",
-        #"test_cases/10_if.smu",
-        #"test_cases/20_fn_basic.smu",
-        #"test_cases/21_recursive_fns.smu",
+        "test_cases/00_expr.smu",
+        "test_cases/01_variables.smu",
+        "test_cases/02_let.smu",
+        "test_cases/10_if.smu",
+        "test_cases/20_fn_basic.smu",
+        "test_cases/21_recursive_fns.smu",
         "test_cases/22_closures.smu",
         "test_cases/99_fib.smu",
     ]

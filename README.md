@@ -17,9 +17,9 @@ it would be blue).
 
 **Fill this in before submitting your final pull request**
 
-Name:
+Name: Alex Yang
 
-SMU ID:
+SMU ID: 47343885
 
 ##### Grading criteria (see [Grading](#grading) below):
 
@@ -45,7 +45,8 @@ I've included in this PR:
 
 [ ] a build file that will create an executable (if required)
 
-[ ] a script that will run the tests (if you're making a test-based submission)
+[X] a script that will run the tests (if you're making a test-based submission)
+---script is located in test_cases and is called run_tests.bat---
 
 (see [Deliverables](#deliverables) for more details)
 
