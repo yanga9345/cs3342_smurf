@@ -1,5 +1,5 @@
 from arpeggio import PTNodeVisitor
-from Interpreter import *
+from interpreter import *
 
 
 class Visitor(PTNodeVisitor):
@@ -14,10 +14,10 @@ class Visitor(PTNodeVisitor):
         return Statement(children[0])
 
     def visit_expr(self, node, children):
-        if len(children) == 1:
+        #if len(children) == 1:
             return Expr(children[0])
-        else:
-            return Expr(children[1])
+        #else:
+        #    return Expr(children[1])
 
     def visit_integer(self, node, children):
         return Integer(int(node.value))

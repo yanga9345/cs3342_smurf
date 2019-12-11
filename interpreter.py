@@ -78,6 +78,7 @@ class BuiltInFunction:
             if type(args) == int:
                 print(args)
             else:
+                print("Print: ")
                 count = 0
                 for arg in args:
                     out = str(arg)
@@ -91,6 +92,19 @@ class BuiltInFunction:
             return args[0]
 
 
+class Binding:
+    def __init__(self, parent, binding):
+        self.parent = parent
+        self.binding = binding
+
+    def getValueOf(self, var_name):
+        if var_name in self.binding:
+            return self.binding[var_name]
+        return self.parent.getValueOf(var_name)
+
+    def add(self, var_name, value):
+        self.binding[var_name] = value
+
 class FunctionCall:
     def __init__(self, func_name, call_args):
         self.func_name = func_name
@@ -102,14 +116,15 @@ class FunctionCall:
             args = self.call_args.eval(binding)
             return args[1].eval(binding)
         else:
+            self.func_binding = binding[self.func_name.value][2]
+            for i in binding:
+                if i not in self.func_binding and i != self.func_name.value :
+                    self.func_binding[i] = binding[i]
+
             parameters = self.call_args[0].eval(binding)[0]
-            #if type(parameters) is tuple:
-            #    parameters = parameters[0]
             args = self.call_args[1].eval(binding)
 
-            #if type(parameters) is not list:
             for i in range(len(parameters)):
-                # self.func_binding[parameters[i]] = args[i]
                 binding[parameters[i]] = args[i]
             return binding[self.func_name.value][1].eval(binding)
 
@@ -118,9 +133,11 @@ class FunctionDefinition:
     def __init__(self, param_list, code_block):
         self.param_list = param_list
         self.code_block = code_block
+        self.func_binding = {}
 
     def eval(self, binding):
-        return self.param_list, self.code_block
+        self.func_binding = {}
+        return self.param_list, self.code_block, self.func_binding
 
 
 class CallArguments:

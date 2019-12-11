@@ -1,4 +1,4 @@
-# python test_runner.py «path to interpreter»
+# python test_runner.py <<path to interpreter>>
 import sys, re
 import os, os.path
 from subprocess import Popen, PIPE
@@ -10,7 +10,7 @@ def get_expected(path):
   return [ v for _,v in re.findall(r'(#=>\s*)(.+)', content, re.M) ]
 
 def normalize(output):
-  return [ v for _,v in re.findall(r'(Print:\s*)(.+)\n', output, re.M) ]
+  return [ v for _,v in re.findall(r'(Print:\s*)(.+)[\r?]+', output, re.M) ]
 
 def compare(stdout, expected):
   output = normalize(stdout)
@@ -20,10 +20,8 @@ def compare(stdout, expected):
     print("\n")
 
 
-
 interpreter = shlex.split(sys.argv[1])
-
-test_files  = [
+test_files = [
   path
   for path in os.listdir(".")
   if os.path.isfile(path) and re.search(r'\.smu$', path)
