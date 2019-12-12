@@ -96,29 +96,62 @@ class BuiltInFunction:
             return args[0]
 
 
+# binding class used to store variables and functions
+class Binding:
+    def __init__(self, parent, binding):
+        self.parent = parent
+        self.binding = binding
+
+    def get(self, name):
+        if name in self.binding:
+            return self.binding[name]
+        return self.parent.get(name)
+
+    def add(self, var_name, value):
+        self.binding[var_name] = value
+
+    def get_binding(self):
+        return self.binding
+
+    def add_binding(self, binding2):
+        for i in binding2.get_binding:
+            self.binding.add(i, binding2.get(i))
+
+    def contains(self, name):
+        for i in self.binding:
+            if i == name:
+                return True
+        if self.parent:
+            return self.parent.contains(name)
+        return False
+
+
 class FunctionCall:
     def __init__(self, func_name, call_args):
         self.func_name = func_name
         self.call_args = call_args
 
     def eval(self, binding):
-        func_binding = binding.get(self.func_name.value)[2]
-
+        # func_binding = Binding(binding.get(self.func_name.value)[2], {})
         # if function has no parameters
         if type(self.call_args) == VarReference:
-            args = self.call_args.eval(func_binding)
-            return args[1].eval(func_binding)
-        # if function has parameters
-        else:
-            # sets parameters and arguments and adds them to the function binding
-            parameters = self.call_args[0].eval(func_binding)[0]
+            args = self.call_args.eval(binding)
+            return args[1].eval(binding)
+        # if function takes parameters
+        # else:
+        func_binding = Binding(binding.get(self.func_name.value)[2], {})
+        # sets parameters and arguments and adds them to the function binding
+        parameters = self.call_args[0].eval(func_binding)[0]
+        if func_binding.contains(parameters[0]):
             args = self.call_args[1].eval(func_binding)
-            for i in range(len(parameters)):
-                func_binding.add(parameters[i], args[i])
+        else:
+            args = self.call_args[1].eval(binding)
+        for i in range(len(parameters)):
+            func_binding.add(parameters[i], args[i])
 
-            # returns the evaluated code using the function binding
-            code = binding.get(self.func_name.value)[1]
-            return code.eval(func_binding)
+        # returns the evaluated code using the function binding
+        code = func_binding.get(self.func_name.value)[1]
+        return code.eval(func_binding)
 
 
 class FunctionDefinition:
@@ -262,30 +295,3 @@ class IfElseExpression:
         else:
             return self.else_block.eval(binding)
 
-
-# binding class used to store variables and functions
-class Binding:
-    def __init__(self, parent, binding):
-        self.parent = parent
-        self.binding = binding
-
-    def get(self, name):
-        if name in self.binding:
-            return self.binding[name]
-        return self.parent.get(name)
-
-    def add(self, var_name, value):
-        self.binding[var_name] = value
-
-    def get_binding(self):
-        return self.binding
-
-    def add_binding(self, binding2):
-        for i in binding2.get_binding:
-            self.binding.add(i, binding2.get(i))
-
-    def contains(self, name):
-        for i in self.binding:
-            if i == name:
-                return True
-        return False
