@@ -131,6 +131,7 @@ class FunctionCall:
             return args[1].eval(binding)
 
         # else
+        # creates a new function binding that is a child of the binding when the function was created
         func_binding = Binding(binding.get(self.func_name.value)[2], {})
         # sets parameters and arguments and adds them to the function binding
         parameters = self.call_args[0].eval(func_binding)[0]
