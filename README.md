@@ -40,10 +40,12 @@ If feature based, put an X in the cell that represents the combination of syntax
 
 I've included in this PR:
 
-[ ] everything I'll need to build a running version of your submission (source,
+[X] everything I'll need to build a running version of your submission (source,
     dependency loading, etc)
+to run all tests, navigate to test_cases/ and run "run_tests.bat"
 
 [ ] a build file that will create an executable (if required)
+I don't create an executable
 
 [X] a script that will run the tests (if you're making a test-based submission)
 ---script is located in test_cases and is called run_tests.bat---

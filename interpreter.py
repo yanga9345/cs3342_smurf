@@ -132,20 +132,21 @@ class FunctionCall:
         self.call_args = call_args
 
     def eval(self, binding):
-        # func_binding = Binding(binding.get(self.func_name.value)[2], {})
         # if function has no parameters
         if type(self.call_args) == VarReference:
             args = self.call_args.eval(binding)
             return args[1].eval(binding)
-        # if function takes parameters
-        # else:
+        # else if function takes parameters
         func_binding = Binding(binding.get(self.func_name.value)[2], {})
         # sets parameters and arguments and adds them to the function binding
         parameters = self.call_args[0].eval(func_binding)[0]
+        # checks to see if the arg values for param_list are in the function binding. This is for recursion.
         if func_binding.contains(parameters[0]):
             args = self.call_args[1].eval(func_binding)
+        # if not, checks if the arg values are in the global binding
         else:
             args = self.call_args[1].eval(binding)
+        # assigns the arg values to the parameters and adds it to the function binding
         for i in range(len(parameters)):
             func_binding.add(parameters[i], args[i])
 
