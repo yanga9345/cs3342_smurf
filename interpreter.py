@@ -110,13 +110,6 @@ class Binding:
     def add(self, var_name, value):
         self.binding[var_name] = value
 
-    def get_binding(self):
-        return self.binding
-
-    def add_binding(self, binding2):
-        for i in binding2.get_binding:
-            self.binding.add(i, binding2.get(i))
-
     def contains(self, name):
         for i in self.binding:
             if i == name:

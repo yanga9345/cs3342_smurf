@@ -14,6 +14,7 @@ def main(debug):
     parse_tree = parser.parse(contents)
 
     result = visit_parse_tree(parse_tree, visitor.Visitor(debug=debug))
+    # creates global binding without a parent
     global_binding = Binding(None, {})
     result.eval(global_binding)
 
