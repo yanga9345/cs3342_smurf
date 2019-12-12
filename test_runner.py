@@ -9,6 +9,7 @@ def get_expected(path):
     content = f.read()
   return [ v for _,v in re.findall(r'(#=>\s*)(.+)', content, re.M) ]
 
+# edited normalize function to get test_runner to work properly with my code
 def normalize(output):
   return [ v for _,v in re.findall(r'(Print:\s*)(.+)[\r?]+', output, re.M) ]
 
